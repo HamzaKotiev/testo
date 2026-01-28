@@ -1,0 +1,30 @@
+[
+    {
+        "id": "pizza",
+        "title": "ПИЦЦА",
+        "description": "Итальянские классические рецепты",
+        "image": "pizza-icon.png",
+        "backgroundColor": "#f8d5c4"
+    },
+    {
+        "id": "drinks",
+        "title": "НАПИТКИ",
+        "description": "Безалкогольные напитки",
+        "image": "drinks-icon.png",
+        "backgroundColor": "#c4e8f8"
+    },
+    {
+        "id": "cocktails",
+        "title": "КОКТЕЙЛИ",
+        "description": "Авторские и классические",
+        "image": "cocktails-icon.png",
+        "backgroundColor": "#e8c4f8"
+    },
+    {
+        "id": "salads",
+        "title": "САЛАТЫ",
+        "description": "Свежие сезонные ингредиенты",
+        "image": "salads-icon.png",
+        "backgroundColor": "#c4f8d5"
+    }
+]

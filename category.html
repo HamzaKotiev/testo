@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Категория меню ресторана">
+    <meta property="og:title" content="Категория меню">
+    <meta property="og:description" content="Просмотр блюд в категории">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' https://fonts.googleapis.com https://necolas.github.io; font-src 'self' https://fonts.gstatic.com; script-src 'self'">
+    <title>Категория</title>
+    <link rel="stylesheet" href="styles/normalize.css">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <main>
+        <section class="container">
+            <a href="index.html" class="back-button" id="back-button" aria-label="Вернуться к списку категорий">← НАЗАД</a>
+            <div id="category-header">
+                <h1 class="category-title" id="category-title">ЗАГРУЗКА...</h1>
+                <p class="category-description" id="category-description"></p>
+            </div>
+            <div class="dishes-grid" id="dishes-container" role="list">
+                <!-- Блюда будут загружены из JSON -->
+            </div>
+        </section>
+    </main>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
