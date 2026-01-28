@@ -80,12 +80,6 @@ nav li {
     transition: all 0.25s ease;
 }
 
-nav li:hover {
-    background-color: #ffe0b2;
-    border-color: #ffb74d;
-    color: #333;
-}
-
 nav li.active {
     background-color: #ff5722;
     color: white;
