@@ -43,10 +43,10 @@ nav {
 }
 
 .subcategories-row.is-visible {
-    display: block;
+    display: flex;
     max-height: 80px;
     opacity: 1;
-    padding: 6px 16px 0;
+    padding: 4px 16px;
 }
 
 nav ul {
@@ -147,7 +147,11 @@ nav li.active {
 /* Responsive (масштабирование кнопок + контент) */
 @media (max-width: 600px) {
     .nav-row {
-        padding: 0 12px;
+        padding: 4px 12px;
+    }
+
+    .subcategories-row.is-visible {
+        padding: 4px 12px;
     }
 
     nav ul {
@@ -164,7 +168,11 @@ nav li.active {
 
 @media (max-width: 400px) {
     .nav-row {
-        padding: 0 10px;
+        padding: 4px 10px;
+    }
+
+    .subcategories-row.is-visible {
+        padding: 4px 10px;
     }
 }
 
