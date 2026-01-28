@@ -46,7 +46,6 @@ nav {
     display: flex;
     max-height: 80px;
     opacity: 1;
-    padding: 4px 16px;
 }
 
 nav ul {
@@ -146,14 +145,6 @@ nav li.active {
 
 /* Responsive (масштабирование кнопок + контент) */
 @media (max-width: 600px) {
-    .nav-row {
-        padding: 4px 12px;
-    }
-
-    .subcategories-row.is-visible {
-        padding: 4px 12px;
-    }
-
     nav ul {
         gap: 10px;
     }
@@ -163,16 +154,6 @@ nav li.active {
     }
     header {
         font-size: 1.2em;
-    }
-}
-
-@media (max-width: 400px) {
-    .nav-row {
-        padding: 4px 10px;
-    }
-
-    .subcategories-row.is-visible {
-        padding: 4px 10px;
     }
 }
 
