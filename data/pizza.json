@@ -1,95 +1,36 @@
 {
-    "category": {
-        "title": "ПИЦЦА",
-        "description": "Традиционные итальянские пиццы, приготовленные в дровяной печи",
-        "image": "pizza-category.jpg",
-        "backgroundColor": "#f8d5c4"
+  "id": "pizza",
+  "name": "Пицца",
+  "items": [
+    {
+      "name": "Маргарита",
+      "description": "Томатный соус, моцарелла, свежий базилик, оливковое масло",
+      "price": 520,
+      "image": "data/pizza/margarita.jpg"
     },
-    "items": [
-        {
-            "name": "МАРГАРИТА",
-            "description": "Томатный соус, моцарелла, свежий базилик, оливковое масло",
-            "sizes": [
-                {
-                    "size": 25,
-                    "price": 550,
-                    "doughTypes": ["traditional"]
-                },
-                {
-                    "size": 30,
-                    "price": 650,
-                    "doughTypes": ["traditional", "thin"]
-                },
-                {
-                    "size": 35,
-                    "price": 750,
-                    "doughTypes": ["traditional", "thin"]
-                }
-            ],
-            "image": "margherita.jpg",
-            "isVegetarian": true,
-            "isSpicy": false,
-            "allergens": ["gluten", "dairy"],
-            "available": true,
-            "rating": 4.8
-        },
-        {
-            "name": "ПЕППЕРОНИ",
-            "description": "Томатный соус, моцарелла, острая пепперони, перец чили",
-            "sizes": [
-                {
-                    "size": 25,
-                    "price": 650,
-                    "doughTypes": ["traditional"]
-                },
-                {
-                    "size": 30,
-                    "price": 750,
-                    "doughTypes": ["traditional", "thin"]
-                },
-                {
-                    "size": 35,
-                    "price": 850,
-                    "doughTypes": ["traditional", "thin"]
-                }
-            ],
-            "image": "pepperoni.jpg",
-            "isVegetarian": false,
-            "isSpicy": true,
-            "allergens": ["gluten", "dairy"],
-            "available": true,
-            "rating": 4.5
-        },
-        {
-            "name": "ЧЕТЫРЕ СЫРА",
-            "description": "Сливочный соус, моцарелла, горгонзола, пармезан, дор блю",
-            "sizes": [
-                {
-                    "size": 25,
-                    "price": 700,
-                    "doughTypes": ["traditional"]
-                },
-                {
-                    "size": 30,
-                    "price": 800,
-                    "doughTypes": ["traditional", "thin"]
-                },
-                {
-                    "size": 35,
-                    "price": 900,
-                    "doughTypes": ["traditional", "thin"]
-                }
-            ],
-            "image": "quattro-formaggi.jpg",
-            "isVegetarian": true,
-            "isSpicy": false,
-            "allergens": ["gluten", "dairy"],
-            "available": true,
-            "rating": 4.7
-        }
-    ],
-    "meta": {
-        "lastUpdated": "2024-05-20",
-        "version": "1.2"
+    {
+      "name": "Пепперони",
+      "description": "Томатный соус, моцарелла, острая пепперони",
+      "price": 650,
+      "image": "data/pizza/pepperoni.jpg"
+    },
+    {
+      "name": "Четыре сыра",
+      "description": "Моцарелла, горгонзола, пармезан, дор-блю, сливочный соус",
+      "price": 720,
+      "image": "data/pizza/quattro-formaggi.jpg"
+    },
+    {
+      "name": "Вегетарианская",
+      "description": "Томатный соус, моцарелла, шампиньоны, болгарский перец, оливки, помидоры",
+      "price": 580,
+      "image": "data/pizza/vegetarian.jpg"
+    },
+    {
+      "name": "Гавайская",
+      "description": "Томатный соус, моцарелла, ветчина, ананас",
+      "price": 680,
+      "image": "data/pizza/hawaiian.jpg"
     }
+  ]
 }

@@ -1,0 +1,30 @@
+{
+  "id": "salads",
+  "name": "Салаты",
+  "items": [
+    {
+      "name": "Цезарь с курицей",
+      "description": "Романо, куриное филе, сухарики, пармезан, соус Цезарь",
+      "price": 420,
+      "image": "data/salads/caesar-chicken.jpg"
+    },
+    {
+      "name": "Капрезе",
+      "description": "Свежие томаты, моцарелла, базилик, бальзамический крем, оливковое масло",
+      "price": 380,
+      "image": "data/salads/caprese.jpg"
+    },
+    {
+      "name": "Греческий",
+      "description": "Огурцы, томаты, красный лук, оливки, фета, орегано, оливковое масло",
+      "price": 350,
+      "image": "data/salads/greek.jpg"
+    },
+    {
+      "name": "Руккола с пармезаном",
+      "description": "Руккола, пармезан, помидоры черри, бальзамик",
+      "price": 340,
+      "image": "data/salads/arugula-parmesan.jpg"
+    }
+  ]
+}
