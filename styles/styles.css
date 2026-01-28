@@ -26,9 +26,10 @@ nav {
 }
 
 .nav-row {
-    padding: 0 16px;
+    padding: 0 16px 6px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
+    scrollbar-gutter: stable;
 }
 
 .subcategories-row {
