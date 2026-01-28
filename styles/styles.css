@@ -119,6 +119,7 @@ nav li:hover, nav li.active {
         white-space: normal;
         text-align: center;
     }
+
     .items-grid {
         grid-template-columns: 1fr;
     }
