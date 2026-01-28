@@ -18,9 +18,6 @@ nav {
     text-align: center;
     padding: 12px 0;
     border-bottom: 1px solid #eee;
-    position: sticky;
-    top: 0;
-    z-index: 10;
 }
 
 nav ul {
@@ -28,13 +25,9 @@ nav ul {
     margin: 0;
     padding: 0 16px;
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 12px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x proximity;
 }
 
 nav li {
@@ -51,8 +44,6 @@ nav li {
     font-weight: 500;
     white-space: nowrap;
     max-width: 100%;
-    flex: 0 0 auto;
-    scroll-snap-align: start;
     transition: all 0.25s ease;
 }
 
@@ -122,6 +113,11 @@ nav li:hover, nav li.active {
     nav ul {
         padding: 0 12px;
         gap: 10px;
+    }
+
+    nav li {
+        white-space: normal;
+        text-align: center;
     }
 
     .items-grid {
