@@ -1,36 +1,93 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const navUl = document.querySelector('nav ul');
+  const categoryList = document.querySelector('.category-list');
+  const subcategoryRow = document.getElementById('subcategories');
+  const subcategoryList = document.querySelector('.subcategory-list');
   const content = document.getElementById('content');
+  let categories = [];
+  let selectedCategoryId = null;
+  let selectedSubcategoryId = null;
 
-  // Список категорий (hardcode, чтобы не загружать отдельный файл)
-  const categories = [
-    { id: 'pizza', name: 'Пицца' },
-    { id: 'snacks', name: 'Закуски' },
-    { id: 'salads', name: 'Салаты' },
-    { id: 'drinks', name: 'Напитки' },
-    { id: 'cocktails', name: 'Коктейли' }
-  ];
+  fetch('data/categories.json')
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Не удалось загрузить категории');
+      }
+      return response.json();
+    })
+    .then(data => {
+      categories = data;
+      renderCategories(categories);
+      clearSelection();
+      loadAllItems();
+    })
+    .catch(error => {
+      content.innerHTML = `<div class="error">${error.message}</div>`;
+    });
 
-  // Рендер кнопок категорий
-  categories.forEach(cat => {
-    const li = document.createElement('li');
-    li.textContent = cat.name;
-    li.dataset.id = cat.id;
-    li.addEventListener('click', () => loadCategory(cat.id));
-    navUl.appendChild(li);
-  });
-
-  // Автозагрузка первой категории
-  if (categories.length > 0) {
-    loadCategory(categories[0].id);
+  function renderCategories(list) {
+    categoryList.innerHTML = '';
+    list.forEach(cat => {
+      const li = document.createElement('li');
+      li.textContent = cat.name;
+      li.dataset.id = cat.id;
+      li.addEventListener('click', () => handleCategorySelect(cat.id));
+      categoryList.appendChild(li);
+    });
   }
 
-  function loadCategory(catId) {
-    // Выделение активной кнопки
-    document.querySelectorAll('nav li').forEach(li => {
+  function handleCategorySelect(catId) {
+    if (selectedCategoryId === catId) {
+      clearSelection();
+      loadAllItems();
+      return;
+    }
+
+    selectedCategoryId = catId;
+    selectedSubcategoryId = null;
+    const category = categories.find(item => item.id === catId);
+    document.querySelectorAll('.category-list li').forEach(li => {
       li.classList.toggle('active', li.dataset.id === catId);
     });
 
+    if (category && Array.isArray(category.subcategories) && category.subcategories.length > 0) {
+      renderSubcategories(category.subcategories, catId);
+      subcategoryRow.classList.add('is-visible');
+      loadCategory(catId, null);
+      return;
+    }
+
+    subcategoryRow.classList.remove('is-visible');
+    subcategoryList.innerHTML = '';
+    loadCategory(catId, null);
+  }
+
+  function renderSubcategories(list, catId) {
+    subcategoryList.innerHTML = '';
+    list.forEach(sub => {
+      const li = document.createElement('li');
+      li.textContent = sub.name;
+      li.dataset.id = sub.id;
+      li.addEventListener('click', () => handleSubcategorySelect(catId, sub.id));
+      subcategoryList.appendChild(li);
+    });
+  }
+
+  function handleSubcategorySelect(catId, subId) {
+    if (selectedSubcategoryId === subId) {
+      clearSelection();
+      loadAllItems();
+      return;
+    }
+
+    selectedCategoryId = catId;
+    selectedSubcategoryId = subId;
+    document.querySelectorAll('.subcategory-list li').forEach(li => {
+      li.classList.toggle('active', li.dataset.id === subId);
+    });
+    loadCategory(catId, subId);
+  }
+
+  function loadCategory(catId, subId) {
     content.innerHTML = '<div class="loader">Загрузка...</div>';
 
     fetch(`data/${catId}.json`)
@@ -41,28 +98,89 @@ document.addEventListener('DOMContentLoaded', function () {
         return response.json();
       })
       .then(data => {
-        let html = '<div class="items-grid">';
-
-        if (!data.items || data.items.length === 0) {
-          html += '<p class="empty">В этой категории пока ничего нет</p>';
-        } else {
-          data.items.forEach(item => {
-            html += `
-              <div class="item-card">
-                ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy">` : ''}
-                <h3>${item.name}</h3>
-                <p>${item.description || ''}</p>
-                <div class="price">${item.price} ₽</div>
-              </div>
-            `;
-          });
-        }
-
-        html += '</div>';
-        content.innerHTML = html;
+        const category = categories.find(item => item.id === catId);
+        const items = sortItemsBySubcategoryOrder(data.items || [], category).filter(item => {
+          if (subId) {
+            return item.categoryId === catId && item.subcategoryId === subId;
+          }
+          return item.categoryId === catId;
+        });
+        renderItems(items);
       })
       .catch(error => {
         content.innerHTML = `<div class="error">${error.message}</div>`;
       });
+  }
+
+  function loadAllItems() {
+    content.innerHTML = '<div class="loader">Загрузка...</div>';
+
+    Promise.all(
+      categories.map(category => fetch(`data/${category.id}.json`).then(response => {
+        if (!response.ok) {
+          throw new Error(`Категория "${category.id}" не найдена`);
+        }
+        return response.json();
+      }))
+    )
+      .then(results => {
+        const allItems = results.reduce((acc, data, index) => {
+          const category = categories[index];
+          const items = sortItemsBySubcategoryOrder(data.items || [], category);
+          return acc.concat(items);
+        }, []);
+
+        renderItems(allItems);
+      })
+      .catch(error => {
+        content.innerHTML = `<div class="error">${error.message}</div>`;
+      });
+  }
+
+  function renderItems(items) {
+    let html = '<div class="items-grid">';
+
+    if (!items || items.length === 0) {
+      html += '<p class="empty">В этой категории пока ничего нет</p>';
+    } else {
+      items.forEach(item => {
+        html += `
+          <div class="item-card">
+            ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy">` : ''}
+            <h3>${item.name}</h3>
+            <p>${item.description || ''}</p>
+            <div class="price">${item.price} ₽</div>
+          </div>
+        `;
+      });
+    }
+
+    html += '</div>';
+    content.innerHTML = html;
+  }
+
+  function sortItemsBySubcategoryOrder(items, category) {
+    if (!category || !Array.isArray(category.subcategories) || category.subcategories.length === 0) {
+      return items;
+    }
+
+    const subcategoryOrder = new Map(
+      category.subcategories.map((sub, index) => [sub.id, index])
+    );
+
+    return [...items].sort((a, b) => {
+      const aIndex = subcategoryOrder.get(a.subcategoryId) ?? Number.MAX_SAFE_INTEGER;
+      const bIndex = subcategoryOrder.get(b.subcategoryId) ?? Number.MAX_SAFE_INTEGER;
+      return aIndex - bIndex;
+    });
+  }
+
+  function clearSelection() {
+    selectedCategoryId = null;
+    selectedSubcategoryId = null;
+    document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
+    document.querySelectorAll('.subcategory-list li').forEach(li => li.classList.remove('active'));
+    subcategoryRow.classList.remove('is-visible');
+    subcategoryList.innerHTML = '';
   }
 });
