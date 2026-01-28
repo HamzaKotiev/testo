@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (category && Array.isArray(category.subcategories) && category.subcategories.length > 0) {
       renderSubcategories(category.subcategories, catId);
       subcategoryRow.classList.add('is-visible');
+      clearSubcategorySelection();
       loadCategory(catId, null);
       return;
     }
@@ -74,8 +75,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function handleSubcategorySelect(catId, subId) {
     if (selectedSubcategoryId === subId) {
-      clearSelection();
-      loadAllItems();
+      clearSubcategorySelection();
+      loadCategory(catId, null);
       return;
     }
 
@@ -179,8 +180,13 @@ document.addEventListener('DOMContentLoaded', function () {
     selectedCategoryId = null;
     selectedSubcategoryId = null;
     categoryList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
-    subcategoryList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+    clearSubcategorySelection();
     subcategoryRow.classList.remove('is-visible');
     subcategoryList.innerHTML = '';
+  }
+
+  function clearSubcategorySelection() {
+    selectedSubcategoryId = null;
+    subcategoryList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
   }
 });
