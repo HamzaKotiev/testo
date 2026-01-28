@@ -6,31 +6,41 @@
       "name": "Кола",
       "description": "Классическая газировка 0.5 л",
       "price": 120,
-      "image": "data/drinks/cola.jpg"
+      "image": "data/drinks/cola.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "soda"
     },
     {
       "name": "Спрайт",
       "description": "Лимон-лайм газировка 0.5 л",
       "price": 120,
-      "image": "data/drinks/sprite.jpg"
+      "image": "data/drinks/sprite.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "soda"
     },
     {
       "name": "Сок апельсиновый",
       "description": "Натуральный сок 0.3 л",
       "price": 150,
-      "image": "data/drinks/orange-juice.jpg"
+      "image": "data/drinks/orange-juice.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "juice"
     },
     {
       "name": "Вода San Pellegrino",
       "description": "Газированная минеральная вода 0.5 л",
       "price": 180,
-      "image": "data/drinks/san-pellegrino.jpg"
+      "image": "data/drinks/san-pellegrino.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "water"
     },
     {
       "name": "Морс клюквенный",
       "description": "Домашний морс 0.5 л",
       "price": 140,
-      "image": "data/drinks/cranberry-mors.jpg"
+      "image": "data/drinks/cranberry-mors.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "juice"
     }
   ]
 }
