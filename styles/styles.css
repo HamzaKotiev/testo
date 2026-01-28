@@ -15,19 +15,28 @@ header {
 
 nav {
     background-color: #ffffff;
-    text-align: center;
+    text-align: left;
     padding: 12px 0;
     border-bottom: 1px solid #eee;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 nav ul {
     list-style: none;
     margin: 0;
     padding: 0 16px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
     gap: 12px;
+    width: max-content;
+    min-width: 100%;
+    overflow-y: hidden;
+    scroll-snap-type: x proximity;
 }
 
 nav li {
@@ -44,6 +53,8 @@ nav li {
     font-weight: 500;
     white-space: nowrap;
     max-width: 100%;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
     transition: all 0.25s ease;
 }
 
@@ -113,11 +124,6 @@ nav li:hover, nav li.active {
     nav ul {
         padding: 0 12px;
         gap: 10px;
-    }
-
-    nav li {
-        white-space: normal;
-        text-align: center;
     }
 
     .items-grid {
