@@ -6,31 +6,41 @@
       "name": "Маргарита",
       "description": "Томатный соус, моцарелла, свежий базилик, оливковое масло",
       "price": 520,
-      "image": "data/pizza/margarita.jpg"
+      "image": "data/pizza/margarita.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "classic"
     },
     {
       "name": "Пепперони",
       "description": "Томатный соус, моцарелла, острая пепперони",
       "price": 650,
-      "image": "data/pizza/pepperoni.jpg"
+      "image": "data/pizza/pepperoni.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "meat"
     },
     {
       "name": "Четыре сыра",
       "description": "Моцарелла, горгонзола, пармезан, дор-блю, сливочный соус",
       "price": 720,
-      "image": "data/pizza/quattro-formaggi.jpg"
+      "image": "data/pizza/quattro-formaggi.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "classic"
     },
     {
       "name": "Вегетарианская",
       "description": "Томатный соус, моцарелла, шампиньоны, болгарский перец, оливки, помидоры",
       "price": 580,
-      "image": "data/pizza/vegetarian.jpg"
+      "image": "data/pizza/vegetarian.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "veg"
     },
     {
       "name": "Гавайская",
       "description": "Томатный соус, моцарелла, ветчина, ананас",
       "price": 680,
-      "image": "data/pizza/hawaiian.jpg"
+      "image": "data/pizza/hawaiian.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "meat"
     }
   ]
 }
