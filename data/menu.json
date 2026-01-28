@@ -1,0 +1,50 @@
+{
+  "categories": [
+    {
+      "id": "pizza",
+      "name": "Пицца",
+      "items": [
+        {
+          "name": "Маргарита",
+          "description": "Томатный соус, моцарелла, базилик",
+          "price": 550,
+          "image": "data/margherita.jpg"
+        },
+        {
+          "name": "Пепперони",
+          "description": "Томатный соус, моцарелла, пепперони",
+          "price": 650,
+          "image": "data/pepperoni.jpg"
+        },
+        {
+          "name": "Четыре сыра",
+          "description": "Моцарелла, горгонзола, пармезан, дор блю",
+          "price": 700,
+          "image": "data/quattro.jpg"
+        }
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": "Напитки",
+      "items": [
+        {
+          "name": "Кола",
+          "description": "0.5 л",
+          "price": 100,
+          "image": "data/cola.jpg"
+        }
+      ]
+    },
+    {
+      "id": "cocktails",
+      "name": "Коктейли",
+      "items": []
+    },
+    {
+      "id": "salads",
+      "name": "Салаты",
+      "items": []
+    }
+  ]
+}
