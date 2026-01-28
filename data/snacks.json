@@ -6,31 +6,41 @@
       "name": "Чесночные гренки",
       "description": "Хлебные гренки с чесночным маслом и сыром, подаются с соусом",
       "price": 220,
-      "image": "data/snacks/garlic-bread.jpg"
+      "image": "data/snacks/garlic-bread.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "hot"
     },
     {
       "name": "Моцарелла стикс",
       "description": "Сырные палочки в панировке, хрустящие снаружи, тягучие внутри",
       "price": 320,
-      "image": "data/snacks/mozzarella-sticks.jpg"
+      "image": "data/snacks/mozzarella-sticks.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "hot"
     },
     {
       "name": "Крылышки BBQ",
       "description": "Куриные крылышки в соусе барбекю, с сельдереем и соусом блю чиз",
       "price": 380,
-      "image": "data/snacks/bbq-wings.jpg"
+      "image": "data/snacks/bbq-wings.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "hot"
     },
     {
       "name": "Картошка фри",
       "description": "Классическая картошка фри с солью и специями",
       "price": 180,
-      "image": "data/snacks/fries.jpg"
+      "image": "data/snacks/fries.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "hot"
     },
     {
       "name": "Антипасти",
       "description": "Ассорти: оливки, вяленые томаты, сыр, салями",
       "price": 450,
-      "image": "data/snacks/antipasti.jpg"
+      "image": "data/snacks/antipasti.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "cold"
     }
   ]
 }
