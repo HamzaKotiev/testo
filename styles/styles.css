@@ -22,11 +22,11 @@ nav {
     z-index: 10;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 0;
 }
 
 .nav-row {
-    padding: 0;
+    padding: 4px 16px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-gutter: stable both-edges;
@@ -43,16 +43,15 @@ nav {
 }
 
 .subcategories-row.is-visible {
-    display: block;
+    display: flex;
     max-height: 80px;
     opacity: 1;
-    padding: 0;
 }
 
 nav ul {
     list-style: none;
     margin: 0;
-    padding: 4px 0 4px;
+    padding: 0;
     display: inline-flex;
     flex-wrap: nowrap;
     justify-content: flex-start;
@@ -146,10 +145,6 @@ nav li.active {
 
 /* Responsive (масштабирование кнопок + контент) */
 @media (max-width: 600px) {
-    .nav-row {
-    padding: 0;
-    }
-
     nav ul {
         gap: 10px;
     }
@@ -159,12 +154,6 @@ nav li.active {
     }
     header {
         font-size: 1.2em;
-    }
-}
-
-@media (max-width: 400px) {
-    .nav-row {
-    padding:  0;
     }
 }
 
