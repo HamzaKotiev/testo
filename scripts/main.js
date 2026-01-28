@@ -178,8 +178,8 @@ document.addEventListener('DOMContentLoaded', function () {
   function clearSelection() {
     selectedCategoryId = null;
     selectedSubcategoryId = null;
-    document.querySelectorAll('.category-list li').forEach(li => li.classList.remove('active'));
-    document.querySelectorAll('.subcategory-list li').forEach(li => li.classList.remove('active'));
+    categoryList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
+    subcategoryList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
     subcategoryRow.classList.remove('is-visible');
     subcategoryList.innerHTML = '';
   }
