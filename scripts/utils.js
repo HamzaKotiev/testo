@@ -1,13 +1,7 @@
+import { STORAGE_KEYS } from './constants.js';
+
 // Утилиты для работы с кэшем
 export class CacheManager {
-  static get cacheKey() {
-    return {
-      CATEGORIES: 'categories',
-      SUBCATEGORIES: 'subcategories_',
-      ITEMS: 'items_'
-    };
-  }
-
   static get cacheExpiration() {
     return 300000; // 5 минут
   }
@@ -36,19 +30,17 @@ export class CacheManager {
   }
 
   static clear() {
-    Object.values(this.cacheKey).forEach(key => {
-      if (Array.isArray(key)) {
-        key.forEach(subKey => localStorage.removeItem(subKey));
-      } else {
+    Object.keys(localStorage).forEach(key => {
+      if (key === STORAGE_KEYS.DATA_CACHE || key.startsWith(`${STORAGE_KEYS.DATA_CACHE}_`)) {
         localStorage.removeItem(key);
       }
     });
+
+    localStorage.removeItem(STORAGE_KEYS.LAST_UPDATE);
   }
 
   static clearCategoryCache(categoryId) {
-    localStorage.removeItem(this.cacheKey.CATEGORIES);
-    localStorage.removeItem(this.cacheKey.SUBCATEGORIES + categoryId);
-    localStorage.removeItem(this.cacheKey.ITEMS + categoryId);
+    localStorage.removeItem(`${STORAGE_KEYS.DATA_CACHE}_${categoryId}`);
   }
 }
 
@@ -144,12 +136,20 @@ export class DataUtils {
     });
   }
 
-  static filterItems(items, categoryId, subcategoryId = null) {
+  static filterItems(items, categoryIds = [], subcategoryKeys = []) {
     return items.filter(item => {
-      if (subcategoryId) {
-        return item.categoryId === categoryId && item.subcategoryId === subcategoryId;
+      if (subcategoryKeys.length > 0) {
+        const key = `${item.categoryId}:${item.subcategoryId}`;
+        if (!subcategoryKeys.includes(key)) {
+          return false;
+        }
       }
-      return item.categoryId === categoryId;
+
+      if (categoryIds.length > 0) {
+        return categoryIds.includes(item.categoryId);
+      }
+
+      return true;
     });
   }
 

@@ -5,13 +5,13 @@ import { CacheManager, NetworkUtils, DOMUtils, DataUtils, EventUtils, Logger } f
 export class AppManager {
   constructor() {
     this.categoryList = document.querySelector(SELECTORS.CATEGORY_LIST);
-    this.subcategoryRow = document.getElementById(SELECTORS.SUBCATEGORY_ROW);
+    this.subcategoryRow = document.querySelector(SELECTORS.SUBCATEGORY_ROW);
     this.subcategoryList = document.querySelector(SELECTORS.SUBCATEGORY_LIST);
-    this.content = document.getElementById(SELECTORS.CONTENT);
+    this.content = document.querySelector(SELECTORS.CONTENT);
     
     this.categories = [];
-    this.selectedCategoryId = null;
-    this.selectedSubcategoryId = null;
+    this.activeCategories = new Set();
+    this.activeSubcategories = new Set();
     
     this.init();
   }
@@ -83,83 +83,83 @@ export class AppManager {
   async handleCategorySelect(catId) {
     Logger.info('Выбор категории:', catId);
     
-    if (this.selectedCategoryId === catId) {
-      this.clearSelection();
-      await this.loadAllItems();
-      return;
+    if (this.activeCategories.has(catId)) {
+      this.activeCategories.delete(catId);
+      this.clearSubcategoriesForCategory(catId);
+    } else {
+      this.activeCategories.add(catId);
     }
 
-    this.selectedCategoryId = catId;
-    this.selectedSubcategoryId = null;
-    
-    // Обновление UI
-    this.updateCategoryUI(catId);
-    
-    const category = this.categories.find(item => item.id === catId);
-    
-    if (category && Array.isArray(category.subcategories) && category.subcategories.length > 0) {
-      this.renderSubcategories(category.subcategories, catId);
-      DOMUtils.toggleClass(this.subcategoryRow, CLASSES.VISIBLE, true);
-      this.clearSubcategorySelection();
-      await this.loadCategory(catId, null);
-      return;
-    }
-
-    DOMUtils.toggleClass(this.subcategoryRow, CLASSES.VISIBLE, false);
-    this.subcategoryList.innerHTML = '';
-    await this.loadCategory(catId, null);
+    this.updateCategoryUI();
+    this.renderSubcategoriesForActiveCategories();
+    await this.refreshFilteredItems();
+    this.scrollToSection(catId);
   }
 
   // Обновление UI категории
-  updateCategoryUI(catId) {
+  updateCategoryUI() {
     this.categoryList.querySelectorAll('li').forEach(li => {
-      DOMUtils.toggleClass(li, CLASSES.ACTIVE, li.dataset.id === catId);
+      DOMUtils.toggleClass(li, CLASSES.ACTIVE, this.activeCategories.has(li.dataset.id));
     });
   }
 
   // Рендеринг подкатегорий
-  renderSubcategories(list, catId) {
+  renderSubcategories(list) {
     this.subcategoryList.innerHTML = '';
     
     list.forEach(sub => {
       const li = DOMUtils.createEl('li', [], sub.name);
       li.dataset.id = sub.id;
-      li.addEventListener('click', () => this.handleSubcategorySelect(catId, sub.id));
+      li.dataset.categoryId = sub.categoryId;
+      li.dataset.key = `${sub.categoryId}:${sub.id}`;
+      li.addEventListener('click', () => this.handleSubcategorySelect(sub.categoryId, sub.id));
       this.subcategoryList.appendChild(li);
     });
+  }
+
+  renderSubcategoriesForActiveCategories() {
+    if (this.activeCategories.size === 0) {
+      DOMUtils.toggleClass(this.subcategoryRow, CLASSES.VISIBLE, false);
+      this.subcategoryList.innerHTML = '';
+      return;
+    }
+
+    const subcategories = this.getActiveSubcategories();
+    this.renderSubcategories(subcategories);
+    DOMUtils.toggleClass(this.subcategoryRow, CLASSES.VISIBLE, subcategories.length > 0);
+    this.updateSubcategoryUI();
   }
 
   // Обработка выбора подкатегории
   async handleSubcategorySelect(catId, subId) {
     Logger.info('Выбор подкатегории:', subId);
     
-    if (this.selectedSubcategoryId === subId) {
-      this.clearSubcategorySelection();
-      await this.loadCategory(catId, null);
-      return;
+    const subcategoryKey = `${catId}:${subId}`;
+
+    if (this.activeSubcategories.has(subcategoryKey)) {
+      this.activeSubcategories.delete(subcategoryKey);
+    } else {
+      this.activeSubcategories.add(subcategoryKey);
+      this.activeCategories.add(catId);
     }
 
-    this.selectedCategoryId = catId;
-    this.selectedSubcategoryId = subId;
-    
-    // Обновление UI
-    this.updateSubcategoryUI(subId);
-    await this.loadCategory(catId, subId);
+    this.updateCategoryUI();
+    this.updateSubcategoryUI();
+    await this.refreshFilteredItems();
+    this.scrollToSection(`${catId}-${subId}`, true);
   }
 
   // Обновление UI подкатегории
-  updateSubcategoryUI(subId) {
+  updateSubcategoryUI() {
     this.subcategoryList.querySelectorAll('li').forEach(li => {
-      DOMUtils.toggleClass(li, CLASSES.ACTIVE, li.dataset.id === subId);
+      DOMUtils.toggleClass(li, CLASSES.ACTIVE, this.activeSubcategories.has(li.dataset.key));
     });
   }
 
   // Очистка выбора подкатегории
   clearSubcategorySelection() {
-    this.selectedSubcategoryId = null;
-    this.subcategoryList.querySelectorAll('li').forEach(li => {
-      li.classList.remove(CLASSES.ACTIVE);
-    });
+    this.activeSubcategories.clear();
+    this.updateSubcategoryUI();
   }
 
   // Загрузка категории
@@ -176,7 +176,11 @@ export class AppManager {
       );
       
       const items = DataUtils.sortItemsBySubcategoryOrder(data.items || [], category);
-      const filteredItems = DataUtils.filterItems(items, catId, subId);
+      const filteredItems = DataUtils.filterItems(
+        items,
+        catId ? [catId] : [],
+        subId ? [subId] : []
+      );
       
       this.renderItems(filteredItems);
       
@@ -221,41 +225,107 @@ export class AppManager {
 
   // Рендеринг товаров
   renderItems(items) {
-    let html = `<div class="items-grid">`;
+    const groupedItems = this.groupItems(items);
+    let html = '';
 
     if (!items || items.length === 0) {
       DOMUtils.showEmptyState(this.content);
       return;
     }
 
-    items.forEach(item => {
+    groupedItems.forEach(categoryGroup => {
       html += `
-        <div class="item-card">
-          <img 
-            src="${DataUtils.getImageUrl(item.image)}" 
-            alt="${item.name}" 
-            loading="lazy"
-            onerror="this.style.display='none'"
-          >
-          <h3>${item.name}</h3>
-          <p>${item.description || ''}</p>
-          <div class="price">${DataUtils.formatPrice(item.price)}</div>
-        </div>
+        <section class="category-section" id="cat-${categoryGroup.id}">
+          <h2>${categoryGroup.name}</h2>
+      `;
+
+      categoryGroup.subcategories.forEach(subcategoryGroup => {
+        html += `
+          <section class="subcategory-section" id="sub-${categoryGroup.id}-${subcategoryGroup.id}">
+            <h3>${subcategoryGroup.name}</h3>
+            <div class="items-grid">
+        `;
+
+        subcategoryGroup.items.forEach(item => {
+          html += this.renderItemCard(item);
+        });
+
+        html += `
+            </div>
+          </section>
+        `;
+      });
+
+      html += `
+        </section>
       `;
     });
 
-    html += '</div>';
     this.content.innerHTML = html;
+  }
+
+  renderItemCard(item) {
+    return `
+      <div class="item-card">
+        <img 
+          src="${DataUtils.getImageUrl(item.image)}" 
+          alt="${item.name}" 
+          loading="lazy"
+          onerror="this.style.display='none'"
+        >
+        <h4>${item.name}</h4>
+        <p>${item.description || ''}</p>
+        <div class="price">${DataUtils.formatPrice(item.price)}</div>
+      </div>
+    `;
+  }
+
+  groupItems(items) {
+    const categoryMap = new Map();
+    const subcategoryLookup = new Map();
+
+    this.categories.forEach(category => {
+      categoryMap.set(category.id, {
+        id: category.id,
+        name: category.name,
+        subcategories: []
+      });
+      (category.subcategories || []).forEach(sub => {
+        subcategoryLookup.set(`${category.id}-${sub.id}`, sub.name);
+      });
+    });
+
+    items.forEach(item => {
+      const categoryGroup = categoryMap.get(item.categoryId);
+      if (!categoryGroup) {
+        return;
+      }
+
+      let subcategoryGroup = categoryGroup.subcategories.find(
+        sub => sub.id === item.subcategoryId
+      );
+
+      if (!subcategoryGroup) {
+        subcategoryGroup = {
+          id: item.subcategoryId,
+          name: subcategoryLookup.get(`${item.categoryId}-${item.subcategoryId}`) || 'Без подкатегории',
+          items: []
+        };
+        categoryGroup.subcategories.push(subcategoryGroup);
+      }
+
+      subcategoryGroup.items.push(item);
+    });
+
+    return [...categoryMap.values()].filter(group => group.subcategories.length > 0);
   }
 
   // Очистка выбора
   clearSelection() {
-    this.selectedCategoryId = null;
-    this.selectedSubcategoryId = null;
+    this.activeCategories.clear();
+    this.activeSubcategories.clear();
     
-    this.categoryList.querySelectorAll('li').forEach(li => {
-      li.classList.remove(CLASSES.ACTIVE);
-    });
+    this.updateCategoryUI();
     
     this.clearSubcategorySelection();
     DOMUtils.toggleClass(this.subcategoryRow, CLASSES.VISIBLE, false);
@@ -286,6 +356,61 @@ export class AppManager {
     if (!NetworkUtils.isOnline()) {
       Logger.warn('Нет интернет-соединения');
       DOMUtils.showError(this.content, 'Нет интернет-соединения. Проверьте подключение.');
+    }
+  }
+
+  getActiveSubcategories() {
+    return this.categories
+      .filter(category => this.activeCategories.has(category.id))
+      .flatMap(category =>
+        (category.subcategories || []).map(sub => ({
+          ...sub,
+          categoryId: category.id
+        }))
+      );
+  }
+
+  clearSubcategoriesForCategory(categoryId) {
+    [...this.activeSubcategories].forEach(key => {
+      if (key.startsWith(`${categoryId}:`)) {
+        this.activeSubcategories.delete(key);
+      }
+    });
+  }
+
+  async refreshFilteredItems() {
+    if (this.activeCategories.size === 0 && this.activeSubcategories.size === 0) {
+      await this.loadAllItems();
+      return;
+    }
+
+    const filteredItems = await this.getFilteredItems();
+    this.renderItems(filteredItems);
+  }
+
+  async getFilteredItems() {
+    const categoryIds = [...this.activeCategories];
+    const subcategoryKeys = [...this.activeSubcategories];
+
+    const categoryPromises = this.categories
+      .filter(category => categoryIds.length === 0 || categoryIds.includes(category.id))
+      .map(async category => {
+        const data = await NetworkUtils.fetchWithCache(
+          `${CONFIG.API_BASE_URL}${category.id}.json`,
+          `${STORAGE_KEYS.DATA_CACHE}_${category.id}`
+        );
+        return DataUtils.sortItemsBySubcategoryOrder(data.items || [], category);
+      });
+
+    const items = (await Promise.all(categoryPromises)).flat();
+    return DataUtils.filterItems(items, categoryIds, subcategoryKeys);
+  }
+
+  scrollToSection(id, isSubcategory = false) {
+    const targetId = isSubcategory ? `sub-${id}` : `cat-${id}`;
+    const element = document.getElementById(targetId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
   }
 }
