@@ -16,7 +16,6 @@
 - **Architecture**: Модульная архитектура с паттерном MVC
 - **Styling**: CSS3
 - **Package Manager**: npm
-- **Testing**: Jest
 - **Code Quality**: ESLint, Prettier
 
 ## Структура проекта
@@ -30,15 +29,12 @@ testo/
 ├── scripts/            # JavaScript файлы
 │   ├── app.js          # Основной класс приложения
 │   ├── constants.js    # Константы приложения
-│   ├── utils.js        # Утилиты и вспомогательные функции
-│   └── main.js         # (Удален) Ранее - дублирующий код для обратной совместимости
+│   └── utils.js        # Утилиты и вспомогательные функции
 ├── styles/             # Стили CSS
 ├── data/               # JSON файлы с данными
 │   ├── categories.json # Список категорий
 │   ├── pizza.json      # Данные о пиццах
 │   └── ...            # Другие JSON файлы
-└── test/               # Файлы тестирования
-    └── tests.js        # Unit-тесты
 ```
 
 ## Установка и запуск
@@ -67,7 +63,6 @@ npm start
 
 - `npm start` - Запуск локального сервера
 - `npm run dev` - Запуск сервера для разработки
-- `npm test` - Запуск тестов
 - `npm run lint` - Проверка кода ESLint
 - `npm run format` - Форматирование кода Prettier
 
@@ -110,24 +105,6 @@ npm start
 - **Factory** - DOMUtils
 - **Observer** - EventUtils
 - **Strategy** - NetworkUtils
-
-## Тестирование
-
-### Unit тесты
-Тесты находятся в папке `test/`
-
-Запуск тестов:
-```bash
-npm test
-```
-
-### Структура тестов
-
-```
-test/
-├── tests.js        # Основные тесты
-└── __mocks__/     # Mock данные
-```
 
 ## Качество кода
 
