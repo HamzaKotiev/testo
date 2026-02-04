@@ -136,12 +136,20 @@ export class DataUtils {
     });
   }
 
-  static filterItems(items, categoryId, subcategoryId = null) {
+  static filterItems(items, categoryIds = [], subcategoryKeys = []) {
     return items.filter(item => {
-      if (subcategoryId) {
-        return item.categoryId === categoryId && item.subcategoryId === subcategoryId;
+      if (subcategoryKeys.length > 0) {
+        const key = `${item.categoryId}:${item.subcategoryId}`;
+        if (!subcategoryKeys.includes(key)) {
+          return false;
+        }
       }
-      return item.categoryId === categoryId;
+
+      if (categoryIds.length > 0) {
+        return categoryIds.includes(item.categoryId);
+      }
+
+      return true;
     });
   }
 
