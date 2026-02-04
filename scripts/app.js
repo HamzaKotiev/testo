@@ -5,9 +5,9 @@ import { CacheManager, NetworkUtils, DOMUtils, DataUtils, EventUtils, Logger } f
 export class AppManager {
   constructor() {
     this.categoryList = document.querySelector(SELECTORS.CATEGORY_LIST);
-    this.subcategoryRow = document.getElementById(SELECTORS.SUBCATEGORY_ROW);
+    this.subcategoryRow = document.querySelector(SELECTORS.SUBCATEGORY_ROW);
     this.subcategoryList = document.querySelector(SELECTORS.SUBCATEGORY_LIST);
-    this.content = document.getElementById(SELECTORS.CONTENT);
+    this.content = document.querySelector(SELECTORS.CONTENT);
     
     this.categories = [];
     this.selectedCategoryId = null;
