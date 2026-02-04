@@ -6,23 +6,51 @@ document.addEventListener('DOMContentLoaded', function () {
   let categories = [];
   let selectedCategoryId = null;
   let selectedSubcategoryId = null;
+  let dataCache = {};
 
-  fetch('data/categories.json')
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Не удалось загрузить категории');
+  const MAX_RETRIES = 3;
+  const RETRY_DELAY = 1000;
+
+  // Улучшенный fetch с retry-механизмом
+  async function fetchWithRetry(url, retries = MAX_RETRIES) {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+      } catch (error) {
+        if (i === retries - 1) {
+          throw error;
+        }
+        await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * (i + 1)));
       }
-      return response.json();
-    })
-    .then(data => {
-      categories = data;
+    }
+  }
+
+  // Загрузка категорий с кэшированием
+  async function loadCategories() {
+    if (dataCache.categories) {
+      categories = dataCache.categories;
       renderCategories(categories);
       clearSelection();
       loadAllItems();
-    })
-    .catch(error => {
-      content.innerHTML = `<div class="error">${error.message}</div>`;
-    });
+      return;
+    }
+
+    try {
+      const data = await fetchWithRetry('data/categories.json');
+      categories = data;
+      dataCache.categories = data;
+      renderCategories(categories);
+      clearSelection();
+      loadAllItems();
+    } catch (error) {
+      console.error('Ошибка загрузки категорий:', error);
+      content.innerHTML = `<div class="error">Не удалось загрузить категории. Попробуйте обновить страницу.</div>`;
+    }
+  }
 
   function renderCategories(list) {
     categoryList.innerHTML = '';
@@ -88,17 +116,12 @@ document.addEventListener('DOMContentLoaded', function () {
     loadCategory(catId, subId);
   }
 
-  function loadCategory(catId, subId) {
+  async function loadCategory(catId, subId) {
     content.innerHTML = '<div class="loader">Загрузка...</div>';
 
-    fetch(`data/${catId}.json`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(`Категория "${catId}" не найдена`);
-        }
-        return response.json();
-      })
-      .then(data => {
+    try {
+      if (dataCache[catId]) {
+        const data = dataCache[catId];
         const category = categories.find(item => item.id === catId);
         const items = sortItemsBySubcategoryOrder(data.items || [], category).filter(item => {
           if (subId) {
@@ -107,35 +130,50 @@ document.addEventListener('DOMContentLoaded', function () {
           return item.categoryId === catId;
         });
         renderItems(items);
-      })
-      .catch(error => {
-        content.innerHTML = `<div class="error">${error.message}</div>`;
+        return;
+      }
+
+      const data = await fetchWithRetry(`data/${catId}.json`);
+      dataCache[catId] = data;
+      const category = categories.find(item => item.id === catId);
+      const items = sortItemsBySubcategoryOrder(data.items || [], category).filter(item => {
+        if (subId) {
+          return item.categoryId === catId && item.subcategoryId === subId;
+        }
+        return item.categoryId === catId;
       });
+      renderItems(items);
+    } catch (error) {
+      console.error(`Ошибка загрузки категории ${catId}:`, error);
+      content.innerHTML = `<div class="error">Не удалось загрузить категорию. Попробуйте позже.</div>`;
+    }
   }
 
-  function loadAllItems() {
+  async function loadAllItems() {
     content.innerHTML = '<div class="loader">Загрузка...</div>';
 
-    Promise.all(
-      categories.map(category => fetch(`data/${category.id}.json`).then(response => {
-        if (!response.ok) {
-          throw new Error(`Категория "${category.id}" не найдена`);
+    try {
+      const categoryPromises = categories.map(async category => {
+        if (dataCache[category.id]) {
+          return dataCache[category.id];
         }
-        return response.json();
-      }))
-    )
-      .then(results => {
-        const allItems = results.reduce((acc, data, index) => {
-          const category = categories[index];
-          const items = sortItemsBySubcategoryOrder(data.items || [], category);
-          return acc.concat(items);
-        }, []);
-
-        renderItems(allItems);
-      })
-      .catch(error => {
-        content.innerHTML = `<div class="error">${error.message}</div>`;
+        const data = await fetchWithRetry(`data/${category.id}.json`);
+        dataCache[category.id] = data;
+        return data;
       });
+
+      const results = await Promise.all(categoryPromises);
+      const allItems = results.reduce((acc, data, index) => {
+        const category = categories[index];
+        const items = sortItemsBySubcategoryOrder(data.items || [], category);
+        return acc.concat(items);
+      }, []);
+
+      renderItems(allItems);
+    } catch (error) {
+      console.error('Ошибка загрузки всех товаров:', error);
+      content.innerHTML = `<div class="error">Не удалось загрузить товары. Попробуйте позже.</div>`;
+    }
   }
 
   function renderItems(items) {
@@ -147,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function () {
       items.forEach(item => {
         html += `
           <div class="item-card">
-            ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy">` : ''}
+            ${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy" onerror="this.style.display='none'">` : ''}
             <h3>${item.name}</h3>
             <p>${item.description || ''}</p>
             <div class="price">${item.price} ₽</div>
@@ -189,4 +227,6 @@ document.addEventListener('DOMContentLoaded', function () {
     selectedSubcategoryId = null;
     subcategoryList.querySelectorAll('li').forEach(li => li.classList.remove('active'));
   }
+
+  loadCategories();
 });
