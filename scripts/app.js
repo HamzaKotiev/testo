@@ -72,9 +72,21 @@ export class AppManager {
     this.categoryList.innerHTML = '';
     
     list.forEach(cat => {
-      const li = DOMUtils.createEl('li', [], cat.name);
+      const li = DOMUtils.createEl('li');
+      const label = DOMUtils.createEl('span', [], cat.name);
+      const scrollButton = DOMUtils.createEl('button', ['scroll-to'], '↧');
+      scrollButton.type = 'button';
+      scrollButton.setAttribute('aria-label', `Перейти к ${cat.name}`);
       li.dataset.id = cat.id;
-      li.addEventListener('click', () => this.handleCategorySelect(cat.id));
+      li.addEventListener('click', event => {
+        event.stopPropagation();
+        this.handleCategorySelect(cat.id);
+      });
+      scrollButton.addEventListener('click', event => {
+        event.stopPropagation();
+        this.scrollToSection(cat.id);
+      });
+      li.append(label, scrollButton);
       this.categoryList.appendChild(li);
     });
   }
@@ -93,7 +105,6 @@ export class AppManager {
     this.updateCategoryUI();
     this.renderSubcategoriesForActiveCategories();
     await this.refreshFilteredItems();
-    this.scrollToSection(catId);
   }
 
   // Обновление UI категории
@@ -108,11 +119,23 @@ export class AppManager {
     this.subcategoryList.innerHTML = '';
     
     list.forEach(sub => {
-      const li = DOMUtils.createEl('li', [], sub.name);
+      const li = DOMUtils.createEl('li');
+      const label = DOMUtils.createEl('span', [], sub.name);
+      const scrollButton = DOMUtils.createEl('button', ['scroll-to'], '↧');
+      scrollButton.type = 'button';
+      scrollButton.setAttribute('aria-label', `Перейти к ${sub.name}`);
       li.dataset.id = sub.id;
       li.dataset.categoryId = sub.categoryId;
       li.dataset.key = `${sub.categoryId}:${sub.id}`;
-      li.addEventListener('click', () => this.handleSubcategorySelect(sub.categoryId, sub.id));
+      li.addEventListener('click', event => {
+        event.stopPropagation();
+        this.handleSubcategorySelect(sub.categoryId, sub.id);
+      });
+      scrollButton.addEventListener('click', event => {
+        event.stopPropagation();
+        this.scrollToSection(`${sub.categoryId}-${sub.id}`, true);
+      });
+      li.append(label, scrollButton);
       this.subcategoryList.appendChild(li);
     });
   }
@@ -146,7 +169,6 @@ export class AppManager {
     this.updateCategoryUI();
     this.updateSubcategoryUI();
     await this.refreshFilteredItems();
-    this.scrollToSection(`${catId}-${subId}`, true);
   }
 
   // Обновление UI подкатегории
