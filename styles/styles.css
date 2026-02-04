@@ -67,6 +67,7 @@ nav li {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 6px;
     cursor: pointer;
     padding: clamp(6px, 1.6vw, 10px) clamp(12px, 3vw, 20px);
     border-radius: 500px;
@@ -87,6 +88,22 @@ nav li.active {
     color: white;
     border-color: #ff5722;
     box-shadow: 0 2px 6px rgba(255,87,34,0.3);
+}
+
+nav li .scroll-to {
+    border: none;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 0;
+    line-height: 1;
+}
+
+nav li .scroll-to:focus-visible {
+    outline: 2px solid rgba(255,87,34,0.6);
+    outline-offset: 2px;
+    border-radius: 4px;
 }
 
 /* Контент */
