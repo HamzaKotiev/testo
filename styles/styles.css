@@ -185,6 +185,18 @@ nav li .scroll-to:focus-visible {
         box-shadow: 0 3px 8px rgba(255, 87, 34, 0.25);
     }
 
+    nav li {
+        gap: 10px;
+    }
+
+    nav li .scroll-to {
+        font-size: 1.1em;
+        padding: 6px;
+        min-width: 32px;
+        min-height: 32px;
+        box-shadow: 0 2px 5px rgba(255, 87, 34, 0.2);
+    }
+
     .items-grid {
         grid-template-columns: 1fr;
     }
