@@ -1,6 +1,6 @@
 // Пример unit-теста для проверки функциональности
-import { AppManager } from './app.js';
-import { CacheManager } from './utils.js';
+import { AppManager } from '../scripts/app.js';
+import { CacheManager } from '../scripts/utils.js';
 
 describe('AppManager', () => {
   let app;
