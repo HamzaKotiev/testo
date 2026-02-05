@@ -1,5 +1,29 @@
 @use "variables" as *;
 
+:root {
+  --color-bg: #f9f9f9;
+  --color-surface: #ffffff;
+  --color-text: #333333;
+  --color-muted: #666666;
+  --color-border: #dddddd;
+  --color-border-light: #eeeeee;
+  --color-accent: #ff5722;
+  --color-accent-light: #ff8a50;
+  --color-accent-soft: #ffe4d6;
+  --color-accent-focus: rgba(255, 87, 34, 0.6);
+  --color-error: #ff0000;
+  --color-empty: #888888;
+  --color-chip-bg: #f5f5f5;
+  --shadow-accent: 0 2px 6px rgba(255, 87, 34, 0.3);
+  --shadow-accent-soft: 0 2px 6px rgba(255, 87, 34, 0.2);
+  --shadow-accent-mobile: 0 2px 5px rgba(255, 87, 34, 0.2);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --radius-pill: 500px;
+  --radius-card: 6px;
+  --radius-image: 4px;
+  --border-width: 1px;
+}
+
 body {
   font-family: $font-family-base;
   margin: 0;

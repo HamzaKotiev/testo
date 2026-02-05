@@ -4,7 +4,7 @@
 nav {
   background-color: $color-white;
   padding: 0;
-  border-bottom: 1px solid $color-border-light;
+  border-bottom: $border-width solid $color-border-light;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -59,8 +59,8 @@ nav li {
   cursor: pointer;
   padding: clamp(6px, 1.6vw, 10px) clamp(12px, 3vw, 20px);
   border-radius: $radius-pill;
-  background-color: #f5f5f5;
-  border: 1px solid $color-border;
+  background-color: $color-chip-bg;
+  border: $border-width solid $color-border;
   color: $color-text;
   font-size: clamp(0.9rem, 2.6vw, 1rem);
   font-weight: 500;
@@ -78,7 +78,7 @@ nav li {
   }
 
   .scroll-to {
-    border: 1px solid $color-accent-light;
+    border: $border-width solid $color-accent-light;
     background: $color-accent-soft;
     color: $color-accent;
     cursor: pointer;
@@ -92,7 +92,7 @@ nav li {
     box-shadow: $shadow-accent-soft;
 
     &:focus-visible {
-      @include focus-ring(rgba(255, 87, 34, 0.6));
+      @include focus-ring($color-accent-focus);
     }
   }
 }
