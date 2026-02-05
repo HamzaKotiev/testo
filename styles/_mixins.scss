@@ -1,0 +1,11 @@
+@mixin focus-ring($color) {
+  outline: 2px solid $color;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@mixin center-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
