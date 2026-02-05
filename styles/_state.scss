@@ -1,0 +1,19 @@
+@use "variables" as *;
+
+.loader,
+.error {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+}
+
+.error {
+  color: $color-error;
+}
+
+.empty {
+  text-align: center;
+  color: $color-empty;
+  font-style: italic;
+  padding: 40px 0;
+}

@@ -1,0 +1,27 @@
+@use "variables" as *;
+
+@media (max-width: 600px) {
+  nav ul {
+    gap: 12px;
+  }
+
+  nav li {
+    gap: 10px;
+  }
+
+  nav li .scroll-to {
+    font-size: 1.1em;
+    padding: 6px;
+    min-width: 32px;
+    min-height: 32px;
+    box-shadow: $shadow-accent-mobile;
+  }
+
+  .items-grid {
+    grid-template-columns: 1fr;
+  }
+
+  header {
+    font-size: 1.2em;
+  }
+}

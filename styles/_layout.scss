@@ -1,0 +1,13 @@
+@use "variables" as *;
+
+#content {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.items-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+}

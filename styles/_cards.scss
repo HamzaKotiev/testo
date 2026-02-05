@@ -1,0 +1,32 @@
+@use "variables" as *;
+
+.item-card {
+  background: $color-white;
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  padding: 10px;
+  text-align: center;
+  box-shadow: $shadow-card;
+
+  img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: $radius-image;
+  }
+
+  h3 {
+    margin: 10px 0 5px;
+    font-size: 1.1em;
+  }
+
+  p {
+    color: $color-muted;
+    font-size: 0.9em;
+  }
+
+  .price {
+    font-weight: bold;
+    color: $color-accent;
+  }
+}
