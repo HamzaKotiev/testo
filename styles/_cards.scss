@@ -2,7 +2,7 @@
 
 .item-card {
   background: $color-white;
-  border: 1px solid $color-border;
+  border: $border-width solid $color-border;
   border-radius: $radius-card;
   padding: 10px;
   text-align: center;

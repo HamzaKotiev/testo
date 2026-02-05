@@ -37,11 +37,15 @@ export const CLASSES = {
 export const DATA_TYPES = {
   CATEGORIES: 'categories',
   SUBCATEGORIES: 'subcategories',
-  ITEMS: 'items'
+  ITEMS: 'items',
+  SITE: 'site',
+  THEME: 'theme'
 };
 
 // Ключи localStorage
 export const STORAGE_KEYS = {
   DATA_CACHE: 'app_data_cache',
-  LAST_UPDATE: 'app_last_update'
+  LAST_UPDATE: 'app_last_update',
+  SITE_CACHE: 'app_site_cache',
+  THEME_CACHE: 'app_theme_cache'
 };

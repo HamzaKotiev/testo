@@ -8,8 +8,11 @@ export class AppManager {
     this.subcategoryRow = document.querySelector(SELECTORS.SUBCATEGORY_ROW);
     this.subcategoryList = document.querySelector(SELECTORS.SUBCATEGORY_LIST);
     this.content = document.querySelector(SELECTORS.CONTENT);
+    this.header = document.querySelector('header');
     
     this.categories = [];
+    this.items = [];
+    this.siteData = null;
     this.activeCategories = new Set();
     this.activeSubcategories = new Set();
     
@@ -21,8 +24,11 @@ export class AppManager {
     try {
       Logger.info('Инициализация приложения...');
       
-      // Загрузка категорий
-      await this.loadCategories();
+      // Загрузка темы
+      await this.loadTheme();
+
+      // Загрузка данных сайта
+      await this.loadSiteData();
       
       // Очистка предыдущего состояния
       this.clearSelection();
@@ -37,33 +43,126 @@ export class AppManager {
     }
   }
 
-  // Загрузка категорий
-  async loadCategories() {
-    Logger.info('Загрузка категорий...');
+  // Загрузка данных сайта
+  async loadSiteData() {
+    Logger.info('Загрузка данных сайта...');
     
     try {
-      // Проверка кэша
-      const cachedCategories = CacheManager.get(STORAGE_KEYS.DATA_CACHE);
-      if (cachedCategories) {
-        this.categories = cachedCategories;
-        this.renderCategories(this.categories);
+      const cachedSite = CacheManager.get(STORAGE_KEYS.SITE_CACHE);
+      if (cachedSite) {
+        this.applySiteData(cachedSite);
         return;
       }
-      
-      // Загрузка с API
-      const categories = await NetworkUtils.fetchWithCache(
-        `${CONFIG.API_BASE_URL}${DATA_TYPES.CATEGORIES}.json`,
-        STORAGE_KEYS.DATA_CACHE
+
+      const siteData = await NetworkUtils.fetchWithCache(
+        `${CONFIG.API_BASE_URL}${DATA_TYPES.SITE}.json`,
+        STORAGE_KEYS.SITE_CACHE
       );
-      
-      this.categories = categories;
-      CacheManager.set(STORAGE_KEYS.DATA_CACHE, categories);
-      this.renderCategories(categories);
-      
-      Logger.success('Категории загружены');
+
+      CacheManager.set(STORAGE_KEYS.SITE_CACHE, siteData);
+      this.applySiteData(siteData);
+      Logger.success('Данные сайта загружены');
     } catch (error) {
-      Logger.error('Ошибка загрузки категорий:', error);
+      Logger.error('Ошибка загрузки данных сайта:', error);
       throw error;
+    }
+  }
+
+  applySiteData(siteData) {
+    this.siteData = siteData;
+    this.categories = siteData?.categories || [];
+    this.items = siteData?.items || [];
+    this.renderCategories(this.categories);
+    this.applySiteMeta(siteData?.meta);
+  }
+
+  applySiteMeta(meta) {
+    if (!meta) return;
+    if (meta.title) {
+      document.title = meta.title;
+      if (this.header) {
+        this.header.textContent = meta.title;
+      }
+    }
+  }
+
+  async loadTheme() {
+    Logger.info('Загрузка темы...');
+    try {
+      const cachedTheme = CacheManager.get(STORAGE_KEYS.THEME_CACHE);
+      if (cachedTheme) {
+        this.applyTheme(cachedTheme);
+        return;
+      }
+
+      const theme = await NetworkUtils.fetchWithCache(
+        `${CONFIG.API_BASE_URL}${DATA_TYPES.THEME}.json`,
+        STORAGE_KEYS.THEME_CACHE
+      );
+
+      CacheManager.set(STORAGE_KEYS.THEME_CACHE, theme);
+      this.applyTheme(theme);
+      Logger.success('Тема загружена');
+    } catch (error) {
+      Logger.warn('Не удалось загрузить тему, используются значения по умолчанию.', error);
+    }
+  }
+
+  applyTheme(theme) {
+    if (!theme) return;
+    const rootStyle = document.documentElement.style;
+    const colorMap = {
+      background: '--color-bg',
+      surface: '--color-surface',
+      text: '--color-text',
+      muted: '--color-muted',
+      border: '--color-border',
+      borderLight: '--color-border-light',
+      accent: '--color-accent',
+      accentLight: '--color-accent-light',
+      accentSoft: '--color-accent-soft',
+      accentFocus: '--color-accent-focus',
+      error: '--color-error',
+      empty: '--color-empty',
+      chipBg: '--color-chip-bg'
+    };
+
+    Object.entries(colorMap).forEach(([key, variable]) => {
+      const value = theme?.colors?.[key];
+      if (value) {
+        rootStyle.setProperty(variable, value);
+      }
+    });
+
+    const shadowMap = {
+      accent: '--shadow-accent',
+      accentSoft: '--shadow-accent-soft',
+      accentMobile: '--shadow-accent-mobile',
+      card: '--shadow-card'
+    };
+
+    Object.entries(shadowMap).forEach(([key, variable]) => {
+      const value = theme?.shadows?.[key];
+      if (value) {
+        rootStyle.setProperty(variable, value);
+      }
+    });
+
+    const radiusMap = {
+      pill: '--radius-pill',
+      card: '--radius-card',
+      image: '--radius-image'
+    };
+
+    Object.entries(radiusMap).forEach(([key, variable]) => {
+      const value = theme?.radii?.[key];
+      if (value) {
+        rootStyle.setProperty(variable, value);
+      }
+    });
+
+    if (theme?.borders?.width) {
+      rootStyle.setProperty('--border-width', theme.borders.width);
     }
   }
 
@@ -192,12 +291,10 @@ export class AppManager {
     
     try {
       const category = this.categories.find(item => item.id === catId);
-      const data = await NetworkUtils.fetchWithCache(
-        `${CONFIG.API_BASE_URL}${catId}.json`,
-        `${STORAGE_KEYS.DATA_CACHE}_${catId}`
+      const items = DataUtils.sortItemsBySubcategoryOrder(
+        this.items.filter(item => item.categoryId === catId),
+        category
       );
-      
-      const items = DataUtils.sortItemsBySubcategoryOrder(data.items || [], category);
       const filteredItems = DataUtils.filterItems(
         items,
         catId ? [catId] : [],
@@ -220,20 +317,12 @@ export class AppManager {
     DOMUtils.showLoader(this.content);
     
     try {
-      const categoryPromises = this.categories.map(async category => {
-        const data = await NetworkUtils.fetchWithCache(
-          `${CONFIG.API_BASE_URL}${category.id}.json`,
-          `${STORAGE_KEYS.DATA_CACHE}_${category.id}`
+      const allItems = this.categories.reduce((acc, category) => {
+        const categoryItems = DataUtils.sortItemsBySubcategoryOrder(
+          this.items.filter(item => item.categoryId === category.id),
+          category
         );
-        return {
-          category,
-          items: DataUtils.sortItemsBySubcategoryOrder(data.items || [], category)
-        };
-      });
-
-      const results = await Promise.all(categoryPromises);
-      const allItems = results.reduce((acc, result) => {
-        return acc.concat(result.items);
+        return acc.concat(categoryItems);
       }, []);
 
       this.renderItems(allItems);
@@ -366,7 +455,7 @@ export class AppManager {
     
     try {
       this.clearCache();
-      await this.loadCategories();
+      await this.loadSiteData();
       Logger.success('Данные обновлены');
     } catch (error) {
       Logger.error('Ошибка обновления данных:', error);
@@ -414,17 +503,15 @@ export class AppManager {
     const categoryIds = [...this.activeCategories];
     const subcategoryKeys = [...this.activeSubcategories];
 
-    const categoryPromises = this.categories
+    const items = this.categories
       .filter(category => categoryIds.length === 0 || categoryIds.includes(category.id))
-      .map(async category => {
-        const data = await NetworkUtils.fetchWithCache(
-          `${CONFIG.API_BASE_URL}${category.id}.json`,
-          `${STORAGE_KEYS.DATA_CACHE}_${category.id}`
-        );
-        return DataUtils.sortItemsBySubcategoryOrder(data.items || [], category);
-      });
+      .flatMap(category =>
+        DataUtils.sortItemsBySubcategoryOrder(
+          this.items.filter(item => item.categoryId === category.id),
+          category
+        )
+      );
 
-    const items = (await Promise.all(categoryPromises)).flat();
     return DataUtils.filterItems(items, categoryIds, subcategoryKeys);
   }
 
