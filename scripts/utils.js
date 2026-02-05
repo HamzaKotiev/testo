@@ -32,20 +32,12 @@ export class CacheManager {
   static clear() {
     Object.keys(localStorage).forEach(key => {
       if (
-        key === STORAGE_KEYS.DATA_CACHE ||
-        key.startsWith(`${STORAGE_KEYS.DATA_CACHE}_`) ||
         key === STORAGE_KEYS.SITE_CACHE ||
         key === STORAGE_KEYS.THEME_CACHE
       ) {
         localStorage.removeItem(key);
       }
     });
-
-    localStorage.removeItem(STORAGE_KEYS.LAST_UPDATE);
-  }
-
-  static clearCategoryCache(categoryId) {
-    localStorage.removeItem(`${STORAGE_KEYS.DATA_CACHE}_${categoryId}`);
   }
 }
 

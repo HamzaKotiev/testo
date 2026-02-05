@@ -1,9 +1,6 @@
 // Константы для приложения
 export const CONFIG = {
-  MAX_RETRIES: 3,
-  RETRY_DELAY: 1000,
   API_BASE_URL: 'data/',
-  CACHE_EXPIRATION: 300000, // 5 минут
   ERROR_MESSAGES: {
     NETWORK_ERROR: 'Не удалось загрузить данные. Проверьте интернет-соединение.',
     SERVER_ERROR: 'Сервер временно недоступен. Попробуйте позже.',
@@ -35,17 +32,12 @@ export const CLASSES = {
 
 // Типы данных
 export const DATA_TYPES = {
-  CATEGORIES: 'categories',
-  SUBCATEGORIES: 'subcategories',
-  ITEMS: 'items',
   SITE: 'site',
   THEME: 'theme'
 };
 
 // Ключи localStorage
 export const STORAGE_KEYS = {
-  DATA_CACHE: 'app_data_cache',
-  LAST_UPDATE: 'app_last_update',
   SITE_CACHE: 'app_site_cache',
   THEME_CACHE: 'app_theme_cache'
 };
