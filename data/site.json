@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "title": "Пицца",
+    "currency": "RUB",
+    "currencySymbol": "₽",
+    "locale": "ru-RU"
+  },
+  "categories": [
+    {
+      "id": "pizza",
+      "name": "Пицца",
+      "subcategories": [
+        { "id": "classic", "name": "Классика" },
+        { "id": "meat", "name": "Мясные" },
+        { "id": "veg", "name": "Вегетарианские" }
+      ]
+    },
+    {
+      "id": "snacks",
+      "name": "Закуски",
+      "subcategories": [
+        { "id": "hot", "name": "Горячие" },
+        { "id": "cold", "name": "Холодные" }
+      ]
+    },
+    {
+      "id": "salads",
+      "name": "Салаты",
+      "subcategories": [
+        { "id": "classic", "name": "Классические" },
+        { "id": "light", "name": "Лёгкие" }
+      ]
+    },
+    {
+      "id": "drinks",
+      "name": "Напитки",
+      "subcategories": [
+        { "id": "soda", "name": "Газировка" },
+        { "id": "juice", "name": "Соки" },
+        { "id": "water", "name": "Вода" }
+      ]
+    },
+    {
+      "id": "cocktails",
+      "name": "Коктейли",
+      "subcategories": [
+        { "id": "classic", "name": "Классические" },
+        { "id": "signature", "name": "Авторские" }
+      ]
+    }
+  ],
+  "items": [
+    {
+      "name": "Маргарита",
+      "description": "Томатный соус, моцарелла, свежий базилик, оливковое масло",
+      "price": 520,
+      "image": "data/pizza/margarita.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "classic"
+    },
+    {
+      "name": "Пепперони",
+      "description": "Томатный соус, моцарелла, острая пепперони",
+      "price": 650,
+      "image": "data/pizza/pepperoni.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "meat"
+    },
+    {
+      "name": "Четыре сыра",
+      "description": "Моцарелла, горгонзола, пармезан, дор-блю, сливочный соус",
+      "price": 720,
+      "image": "data/pizza/quattro-formaggi.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "classic"
+    },
+    {
+      "name": "Вегетарианская",
+      "description": "Томатный соус, моцарелла, шампиньоны, болгарский перец, оливки, помидоры",
+      "price": 580,
+      "image": "data/pizza/vegetarian.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "veg"
+    },
+    {
+      "name": "Гавайская",
+      "description": "Томатный соус, моцарелла, ветчина, ананас",
+      "price": 680,
+      "image": "data/pizza/hawaiian.jpg",
+      "categoryId": "pizza",
+      "subcategoryId": "meat"
+    },
+    {
+      "name": "Картофель фри",
+      "description": "Хрустящая картошка фри с соусом",
+      "price": 190,
+      "image": "data/snacks/fries.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "hot"
+    },
+    {
+      "name": "Кольца кальмара",
+      "description": "Обжаренные кольца кальмара в панировке",
+      "price": 280,
+      "image": "data/snacks/calamari.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "hot"
+    },
+    {
+      "name": "Оливки",
+      "description": "Маринованные оливки",
+      "price": 160,
+      "image": "data/snacks/olives.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "cold"
+    },
+    {
+      "name": "Брускетта",
+      "description": "Тосты с томатами и базиликом",
+      "price": 220,
+      "image": "data/snacks/bruschetta.jpg",
+      "categoryId": "snacks",
+      "subcategoryId": "cold"
+    },
+    {
+      "name": "Цезарь",
+      "description": "Романо, курица, сухарики, пармезан",
+      "price": 420,
+      "image": "data/salads/caesar.jpg",
+      "categoryId": "salads",
+      "subcategoryId": "classic"
+    },
+    {
+      "name": "Греческий",
+      "description": "Огурцы, помидоры, фета, маслины",
+      "price": 360,
+      "image": "data/salads/greek.jpg",
+      "categoryId": "salads",
+      "subcategoryId": "classic"
+    },
+    {
+      "name": "Овощной микс",
+      "description": "Свежие овощи с лёгкой заправкой",
+      "price": 300,
+      "image": "data/salads/veggie.jpg",
+      "categoryId": "salads",
+      "subcategoryId": "light"
+    },
+    {
+      "name": "Капрезе",
+      "description": "Томаты, моцарелла, базилик",
+      "price": 340,
+      "image": "data/salads/caprese.jpg",
+      "categoryId": "salads",
+      "subcategoryId": "light"
+    },
+    {
+      "name": "Кола",
+      "description": "0.5 л",
+      "price": 120,
+      "image": "data/drinks/cola.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "soda"
+    },
+    {
+      "name": "Лимонад",
+      "description": "0.5 л",
+      "price": 110,
+      "image": "data/drinks/lemonade.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "soda"
+    },
+    {
+      "name": "Апельсиновый сок",
+      "description": "0.25 л",
+      "price": 140,
+      "image": "data/drinks/orange-juice.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "juice"
+    },
+    {
+      "name": "Яблочный сок",
+      "description": "0.25 л",
+      "price": 140,
+      "image": "data/drinks/apple-juice.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "juice"
+    },
+    {
+      "name": "Минеральная вода",
+      "description": "0.5 л",
+      "price": 90,
+      "image": "data/drinks/water.jpg",
+      "categoryId": "drinks",
+      "subcategoryId": "water"
+    },
+    {
+      "name": "Мохито",
+      "description": "Белый ром, лайм, сахар, мята, содовая",
+      "price": 380,
+      "image": "data/cocktails/mojito.jpg",
+      "categoryId": "cocktails",
+      "subcategoryId": "classic"
+    },
+    {
+      "name": "Пина Колада",
+      "description": "Ананасовый сок, кокос, белый ром",
+      "price": 420,
+      "image": "data/cocktails/pina-colada.jpg",
+      "categoryId": "cocktails",
+      "subcategoryId": "classic"
+    },
+    {
+      "name": "Фирменный цитрус",
+      "description": "Цитрусовый микс с лёгкой кислинкой",
+      "price": 450,
+      "image": "data/cocktails/citrus.jpg",
+      "categoryId": "cocktails",
+      "subcategoryId": "signature"
+    },
+    {
+      "name": "Ягодный спешл",
+      "description": "Ягодный микс, лайм, мята",
+      "price": 460,
+      "image": "data/cocktails/berry.jpg",
+      "categoryId": "cocktails",
+      "subcategoryId": "signature"
+    }
+  ]
+}
