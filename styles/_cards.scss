@@ -13,7 +13,8 @@
     "media content"
     "media actions";
   gap: 10px 14px;
-  align-items: start;
+  align-items: stretch;
+  overflow: hidden;
 
   &__media {
     grid-area: media;
@@ -29,11 +30,13 @@
     max-height: 170px;
     object-fit: cover;
     border-radius: $radius-image;
+    display: block;
   }
 
   &__content {
     grid-area: content;
     text-align: left;
+    min-width: 0;
   }
 
   &__title {
@@ -58,5 +61,6 @@
     align-items: flex-start;
     gap: 8px;
     text-align: left;
+    min-width: 0;
   }
 }

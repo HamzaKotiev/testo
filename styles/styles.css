@@ -162,7 +162,8 @@ nav li .scroll-to:focus-visible {
     "media content"
     "media actions";
   gap: 10px 14px;
-  align-items: start;
+  align-items: stretch;
+  overflow: hidden;
 }
 
 .item-card__media {
@@ -179,11 +180,13 @@ nav li .scroll-to:focus-visible {
   max-height: 170px;
   object-fit: cover;
   border-radius: var(--radius-image);
+  display: block;
 }
 
 .item-card__content {
   grid-area: content;
   text-align: left;
+  min-width: 0;
 }
 
 .item-card__title {
@@ -208,6 +211,7 @@ nav li .scroll-to:focus-visible {
   align-items: flex-start;
   gap: 8px;
   text-align: left;
+  min-width: 0;
 }
 
 .size-list {
