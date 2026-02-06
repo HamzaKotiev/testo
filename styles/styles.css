@@ -163,7 +163,6 @@ nav li .scroll-to:focus-visible {
     "media actions";
   gap: 10px 14px;
   align-items: stretch;
-  overflow: hidden;
 }
 
 .item-card__media {
@@ -176,8 +175,7 @@ nav li .scroll-to:focus-visible {
 
 .item-card__media img {
   width: 100%;
-  height: 100%;
-  max-height: 170px;
+  height: auto;
   object-fit: cover;
   border-radius: var(--radius-image);
   display: block;
