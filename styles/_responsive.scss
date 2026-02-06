@@ -21,6 +21,19 @@
     grid-template-columns: 1fr;
   }
 
+  .item-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "media"
+      "content"
+      "actions";
+  }
+
+  .item-card__media img {
+    height: auto;
+    max-height: 200px;
+  }
+
   header {
     font-size: 1.2em;
   }
