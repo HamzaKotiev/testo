@@ -376,6 +376,28 @@ export class AppManager {
   }
 
   renderItemCard(item) {
+    const sizes = Array.isArray(item.sizes) ? item.sizes : [];
+    const prices = Array.isArray(item.prices) ? item.prices : [];
+    const priceLines = sizes
+      .map((size, index) => {
+        const price = prices[index];
+        const formattedPrice = typeof price === 'number'
+          ? DataUtils.formatPrice(price)
+          : '';
+        return `
+          <div class="price-line">
+            <span class="price-size">${size}</span>
+            <span class="price-value">${formattedPrice}</span>
+          </div>
+        `;
+      })
+      .join('');
+    const priceMarkup = priceLines || `
+      <div class="price-line">
+        <span class="price-value">Цена уточняется</span>
+      </div>
+    `;
+
     return `
       <div class="item-card">
         <img 
@@ -386,7 +408,7 @@ export class AppManager {
         >
         <h4>${item.name}</h4>
         <p>${item.description || ''}</p>
-        <div class="price">${DataUtils.formatPrice(item.price)}</div>
+        <div class="price-list">${priceMarkup}</div>
       </div>
     `;
   }

@@ -10,42 +10,78 @@
       "id": "pizza",
       "name": "Пицца",
       "subcategories": [
-        { "id": "classic", "name": "Классика" },
-        { "id": "meat", "name": "Мясные" },
-        { "id": "veg", "name": "Вегетарианские" }
+        {
+          "id": "classic",
+          "name": "Классика"
+        },
+        {
+          "id": "meat",
+          "name": "Мясные"
+        },
+        {
+          "id": "veg",
+          "name": "Вегетарианские"
+        }
       ]
     },
     {
       "id": "snacks",
       "name": "Закуски",
       "subcategories": [
-        { "id": "hot", "name": "Горячие" },
-        { "id": "cold", "name": "Холодные" }
+        {
+          "id": "hot",
+          "name": "Горячие"
+        },
+        {
+          "id": "cold",
+          "name": "Холодные"
+        }
       ]
     },
     {
       "id": "salads",
       "name": "Салаты",
       "subcategories": [
-        { "id": "classic", "name": "Классические" },
-        { "id": "light", "name": "Лёгкие" }
+        {
+          "id": "classic",
+          "name": "Классические"
+        },
+        {
+          "id": "light",
+          "name": "Лёгкие"
+        }
       ]
     },
     {
       "id": "drinks",
       "name": "Напитки",
       "subcategories": [
-        { "id": "soda", "name": "Газировка" },
-        { "id": "juice", "name": "Соки" },
-        { "id": "water", "name": "Вода" }
+        {
+          "id": "soda",
+          "name": "Газировка"
+        },
+        {
+          "id": "juice",
+          "name": "Соки"
+        },
+        {
+          "id": "water",
+          "name": "Вода"
+        }
       ]
     },
     {
       "id": "cocktails",
       "name": "Коктейли",
       "subcategories": [
-        { "id": "classic", "name": "Классические" },
-        { "id": "signature", "name": "Авторские" }
+        {
+          "id": "classic",
+          "name": "Классические"
+        },
+        {
+          "id": "signature",
+          "name": "Авторские"
+        }
       ]
     }
   ],
@@ -53,178 +89,376 @@
     {
       "name": "Маргарита",
       "description": "Томатный соус, моцарелла, свежий базилик, оливковое масло",
-      "price": 520,
       "image": "data/pizza/margarita.jpg",
       "categoryId": "pizza",
-      "subcategoryId": "classic"
+      "subcategoryId": "classic",
+      "sizes": [
+        "25 см",
+        "30 см",
+        "35 см"
+      ],
+      "prices": [
+        400,
+        520,
+        660
+      ]
     },
     {
       "name": "Пепперони",
       "description": "Томатный соус, моцарелла, острая пепперони",
-      "price": 650,
       "image": "data/pizza/pepperoni.jpg",
       "categoryId": "pizza",
-      "subcategoryId": "meat"
+      "subcategoryId": "meat",
+      "sizes": [
+        "25 см",
+        "30 см",
+        "35 см"
+      ],
+      "prices": [
+        530,
+        650,
+        790
+      ]
     },
     {
       "name": "Четыре сыра",
       "description": "Моцарелла, горгонзола, пармезан, дор-блю, сливочный соус",
-      "price": 720,
       "image": "data/pizza/quattro-formaggi.jpg",
       "categoryId": "pizza",
-      "subcategoryId": "classic"
+      "subcategoryId": "classic",
+      "sizes": [
+        "25 см",
+        "30 см",
+        "35 см"
+      ],
+      "prices": [
+        600,
+        720,
+        860
+      ]
     },
     {
       "name": "Вегетарианская",
       "description": "Томатный соус, моцарелла, шампиньоны, болгарский перец, оливки, помидоры",
-      "price": 580,
       "image": "data/pizza/vegetarian.jpg",
       "categoryId": "pizza",
-      "subcategoryId": "veg"
+      "subcategoryId": "veg",
+      "sizes": [
+        "25 см",
+        "30 см",
+        "35 см"
+      ],
+      "prices": [
+        460,
+        580,
+        720
+      ]
     },
     {
       "name": "Гавайская",
       "description": "Томатный соус, моцарелла, ветчина, ананас",
-      "price": 680,
       "image": "data/pizza/hawaiian.jpg",
       "categoryId": "pizza",
-      "subcategoryId": "meat"
+      "subcategoryId": "meat",
+      "sizes": [
+        "25 см",
+        "30 см",
+        "35 см"
+      ],
+      "prices": [
+        560,
+        680,
+        820
+      ]
     },
     {
       "name": "Картофель фри",
       "description": "Хрустящая картошка фри с соусом",
-      "price": 190,
       "image": "data/snacks/fries.jpg",
       "categoryId": "snacks",
-      "subcategoryId": "hot"
+      "subcategoryId": "hot",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        150,
+        190,
+        240
+      ]
     },
     {
       "name": "Кольца кальмара",
       "description": "Обжаренные кольца кальмара в панировке",
-      "price": 280,
       "image": "data/snacks/calamari.jpg",
       "categoryId": "snacks",
-      "subcategoryId": "hot"
+      "subcategoryId": "hot",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        240,
+        280,
+        330
+      ]
     },
     {
       "name": "Оливки",
       "description": "Маринованные оливки",
-      "price": 160,
       "image": "data/snacks/olives.jpg",
       "categoryId": "snacks",
-      "subcategoryId": "cold"
+      "subcategoryId": "cold",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        120,
+        160,
+        210
+      ]
     },
     {
       "name": "Брускетта",
       "description": "Тосты с томатами и базиликом",
-      "price": 220,
       "image": "data/snacks/bruschetta.jpg",
       "categoryId": "snacks",
-      "subcategoryId": "cold"
+      "subcategoryId": "cold",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        180,
+        220,
+        270
+      ]
     },
     {
       "name": "Цезарь",
       "description": "Романо, курица, сухарики, пармезан",
-      "price": 420,
       "image": "data/salads/caesar.jpg",
       "categoryId": "salads",
-      "subcategoryId": "classic"
+      "subcategoryId": "classic",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        380,
+        420,
+        470
+      ]
     },
     {
       "name": "Греческий",
       "description": "Огурцы, помидоры, фета, маслины",
-      "price": 360,
       "image": "data/salads/greek.jpg",
       "categoryId": "salads",
-      "subcategoryId": "classic"
+      "subcategoryId": "classic",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        320,
+        360,
+        410
+      ]
     },
     {
       "name": "Овощной микс",
       "description": "Свежие овощи с лёгкой заправкой",
-      "price": 300,
       "image": "data/salads/veggie.jpg",
       "categoryId": "salads",
-      "subcategoryId": "light"
+      "subcategoryId": "light",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        260,
+        300,
+        350
+      ]
     },
     {
       "name": "Капрезе",
       "description": "Томаты, моцарелла, базилик",
-      "price": 340,
       "image": "data/salads/caprese.jpg",
       "categoryId": "salads",
-      "subcategoryId": "light"
+      "subcategoryId": "light",
+      "sizes": [
+        "Малая",
+        "Средняя",
+        "Большая"
+      ],
+      "prices": [
+        300,
+        340,
+        390
+      ]
     },
     {
       "name": "Кола",
       "description": "0.5 л",
-      "price": 120,
       "image": "data/drinks/cola.jpg",
       "categoryId": "drinks",
-      "subcategoryId": "soda"
+      "subcategoryId": "soda",
+      "sizes": [
+        "0.25 л",
+        "0.5 л",
+        "1 л"
+      ],
+      "prices": [
+        90,
+        120,
+        190
+      ]
     },
     {
       "name": "Лимонад",
       "description": "0.5 л",
-      "price": 110,
       "image": "data/drinks/lemonade.jpg",
       "categoryId": "drinks",
-      "subcategoryId": "soda"
+      "subcategoryId": "soda",
+      "sizes": [
+        "0.25 л",
+        "0.5 л",
+        "1 л"
+      ],
+      "prices": [
+        80,
+        110,
+        180
+      ]
     },
     {
       "name": "Апельсиновый сок",
       "description": "0.25 л",
-      "price": 140,
       "image": "data/drinks/orange-juice.jpg",
       "categoryId": "drinks",
-      "subcategoryId": "juice"
+      "subcategoryId": "juice",
+      "sizes": [
+        "0.25 л",
+        "0.5 л",
+        "1 л"
+      ],
+      "prices": [
+        110,
+        140,
+        210
+      ]
     },
     {
       "name": "Яблочный сок",
       "description": "0.25 л",
-      "price": 140,
       "image": "data/drinks/apple-juice.jpg",
       "categoryId": "drinks",
-      "subcategoryId": "juice"
+      "subcategoryId": "juice",
+      "sizes": [
+        "0.25 л",
+        "0.5 л",
+        "1 л"
+      ],
+      "prices": [
+        110,
+        140,
+        210
+      ]
     },
     {
       "name": "Минеральная вода",
       "description": "0.5 л",
-      "price": 90,
       "image": "data/drinks/water.jpg",
       "categoryId": "drinks",
-      "subcategoryId": "water"
+      "subcategoryId": "water",
+      "sizes": [
+        "0.25 л",
+        "0.5 л",
+        "1 л"
+      ],
+      "prices": [
+        60,
+        90,
+        160
+      ]
     },
     {
       "name": "Мохито",
       "description": "Белый ром, лайм, сахар, мята, содовая",
-      "price": 380,
       "image": "data/cocktails/mojito.jpg",
       "categoryId": "cocktails",
-      "subcategoryId": "classic"
+      "subcategoryId": "classic",
+      "sizes": [
+        "200 мл",
+        "300 мл",
+        "400 мл"
+      ],
+      "prices": [
+        340,
+        380,
+        440
+      ]
     },
     {
       "name": "Пина Колада",
       "description": "Ананасовый сок, кокос, белый ром",
-      "price": 420,
       "image": "data/cocktails/pina-colada.jpg",
       "categoryId": "cocktails",
-      "subcategoryId": "classic"
+      "subcategoryId": "classic",
+      "sizes": [
+        "200 мл",
+        "300 мл",
+        "400 мл"
+      ],
+      "prices": [
+        380,
+        420,
+        480
+      ]
     },
     {
       "name": "Фирменный цитрус",
       "description": "Цитрусовый микс с лёгкой кислинкой",
-      "price": 450,
       "image": "data/cocktails/citrus.jpg",
       "categoryId": "cocktails",
-      "subcategoryId": "signature"
+      "subcategoryId": "signature",
+      "sizes": [
+        "200 мл",
+        "300 мл",
+        "400 мл"
+      ],
+      "prices": [
+        410,
+        450,
+        510
+      ]
     },
     {
       "name": "Ягодный спешл",
       "description": "Ягодный микс, лайм, мята",
-      "price": 460,
       "image": "data/cocktails/berry.jpg",
       "categoryId": "cocktails",
-      "subcategoryId": "signature"
+      "subcategoryId": "signature",
+      "sizes": [
+        "200 мл",
+        "300 мл",
+        "400 мл"
+      ],
+      "prices": [
+        420,
+        460,
+        520
+      ]
     }
   ]
 }
