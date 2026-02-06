@@ -25,8 +25,21 @@
     font-size: 0.9em;
   }
 
-  .price {
-    font-weight: bold;
+  .price-list {
+    display: grid;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .price-line {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
     color: $color-accent;
+  }
+
+  .price-size {
+    color: $color-muted;
+    font-weight: 500;
   }
 }

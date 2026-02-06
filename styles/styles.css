@@ -175,9 +175,22 @@ nav li .scroll-to:focus-visible {
   font-size: 0.9em;
 }
 
-.item-card .price {
-  font-weight: bold;
+.item-card .price-list {
+  display: grid;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.item-card .price-line {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
   color: var(--color-accent);
+}
+
+.item-card .price-size {
+  color: var(--color-muted);
+  font-weight: 500;
 }
 
 .loader,
