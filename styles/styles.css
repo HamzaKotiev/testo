@@ -62,7 +62,10 @@ nav {
 }
 
 .nav-row {
-  padding: 0;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 20px;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-gutter: stable both-edges;
@@ -92,7 +95,7 @@ nav ul {
   justify-content: flex-start;
   gap: 12px;
   width: 100%;
-  min-width: 100%;
+  min-width: 0;
   overflow-y: hidden;
   scroll-snap-type: x proximity;
   align-items: center;
@@ -279,6 +282,11 @@ nav li .scroll-to:focus-visible {
 }
 
 @media (max-width: 600px) {
+  .nav-row {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
   nav ul {
     gap: 12px;
   }

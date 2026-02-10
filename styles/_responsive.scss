@@ -1,6 +1,12 @@
 @use "variables" as *;
 
 @media (max-width: 600px) {
+  .nav-row {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
   nav ul {
     gap: 12px;
   }
