@@ -8,7 +8,6 @@ export class AppManager {
     this.subcategoryRow = document.querySelector(SELECTORS.SUBCATEGORY_ROW);
     this.subcategoryList = document.querySelector(SELECTORS.SUBCATEGORY_LIST);
     this.content = document.querySelector(SELECTORS.CONTENT);
-    this.header = document.querySelector('header');
     
     this.categories = [];
     this.items = [];
@@ -85,9 +84,6 @@ export class AppManager {
     if (!meta) return;
     if (meta.title) {
       document.title = meta.title;
-      if (this.header) {
-        this.header.textContent = meta.title;
-      }
     }
   }
 

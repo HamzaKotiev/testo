@@ -71,8 +71,8 @@
   background-color: $color-chip-bg;
   color: $color-text;
   border-radius: $radius-pill;
-  padding: 6px 12px;
-  font-size: 0.9rem;
+  padding: 4.8px 9.6px;
+  font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
@@ -97,27 +97,27 @@
   background-color: $color-chip-bg;
   color: $color-muted;
   border-radius: $radius-pill;
-  padding: 6px 12px;
-  font-size: 0.9rem;
+  padding: 4.8px 9.6px;
+  font-size: 0.72rem;
 }
 
 .item-price {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6.4px;
   border: $border-width solid $color-border;
   background-color: $color-chip-bg;
   border-radius: $radius-pill;
-  padding: 6px 12px;
+  padding: 4.8px 9.6px;
 }
 
 .item-price__label {
   color: $color-muted;
-  font-size: 0.9rem;
+  font-size: 0.72rem;
 }
 
 .item-price__value {
   color: $color-text;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.72rem;
 }

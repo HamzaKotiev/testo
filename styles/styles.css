@@ -29,14 +29,6 @@ body {
   background-color: var(--color-bg);
 }
 
-header {
-  background-color: var(--color-accent);
-  color: var(--color-surface);
-  text-align: center;
-  padding: 10px 0;
-  font-size: 1.5em;
-}
-
 #content {
   max-width: 1200px;
   margin: 20px auto;
@@ -214,8 +206,8 @@ nav li .scroll-to:focus-visible {
   background-color: var(--color-chip-bg);
   color: var(--color-text);
   border-radius: var(--radius-pill);
-  padding: 6px 12px;
-  font-size: 0.9rem;
+  padding: 4.8px 9.6px;
+  font-size: 0.72rem;
   font-weight: 500;
   line-height: 1.2;
   cursor: pointer;
@@ -238,29 +230,29 @@ nav li .scroll-to:focus-visible {
   background-color: var(--color-chip-bg);
   color: var(--color-muted);
   border-radius: var(--radius-pill);
-  padding: 6px 12px;
-  font-size: 0.9rem;
+  padding: 4.8px 9.6px;
+  font-size: 0.72rem;
 }
 
 .item-price {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6.4px;
   border: var(--border-width) solid var(--color-border);
   background-color: var(--color-chip-bg);
   border-radius: var(--radius-pill);
-  padding: 6px 12px;
+  padding: 4.8px 9.6px;
 }
 
 .item-price__label {
   color: var(--color-muted);
-  font-size: 0.9rem;
+  font-size: 0.72rem;
 }
 
 .item-price__value {
   color: var(--color-text);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.72rem;
 }
 
 .loader,
@@ -310,9 +302,6 @@ nav li .scroll-to:focus-visible {
   .item-card__media img {
     height: auto;
     max-height: 200px;
-  }
-  header {
-    font-size: 1.2em;
   }
 }
 
