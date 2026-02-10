@@ -200,6 +200,66 @@ nav li .scroll-to:focus-visible {
   min-width: 0;
 }
 
+.size-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.size-pill {
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-chip-bg);
+  color: var(--color-text);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.25s ease;
+}
+.size-pill.is-active {
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+  border-color: var(--color-accent);
+  box-shadow: var(--shadow-accent);
+}
+.size-pill:focus-visible {
+  outline: 2px solid var(--color-accent-focus);
+  outline-offset: 2px;
+}
+
+.size-empty {
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-chip-bg);
+  color: var(--color-muted);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  font-size: 0.9rem;
+}
+
+.item-price {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: var(--border-width) solid var(--color-border);
+  background-color: var(--color-chip-bg);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+}
+
+.item-price__label {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.item-price__value {
+  color: var(--color-text);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
 .loader,
 .error {
   text-align: center;
