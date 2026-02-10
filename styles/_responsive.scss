@@ -1,6 +1,12 @@
 @use "variables" as *;
 
 @media (max-width: 600px) {
+  .nav-row {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
   nav ul {
     gap: 12px;
   }
@@ -21,7 +27,16 @@
     grid-template-columns: 1fr;
   }
 
-  header {
-    font-size: 1.2em;
+  .item-card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "media"
+      "content"
+      "actions";
+  }
+
+  .item-card__media img {
+    height: auto;
+    max-height: 200px;
   }
 }

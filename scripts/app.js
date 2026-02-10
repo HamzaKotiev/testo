@@ -8,13 +8,17 @@ export class AppManager {
     this.subcategoryRow = document.querySelector(SELECTORS.SUBCATEGORY_ROW);
     this.subcategoryList = document.querySelector(SELECTORS.SUBCATEGORY_LIST);
     this.content = document.querySelector(SELECTORS.CONTENT);
-    this.header = document.querySelector('header');
     
     this.categories = [];
     this.items = [];
     this.siteData = null;
     this.activeCategories = new Set();
     this.activeSubcategories = new Set();
+
+    this.handleSizeSelect = this.handleSizeSelect.bind(this);
+    if (this.content) {
+      this.content.addEventListener('click', this.handleSizeSelect);
+    }
     
     this.init();
   }
@@ -80,9 +84,6 @@ export class AppManager {
     if (!meta) return;
     if (meta.title) {
       document.title = meta.title;
-      if (this.header) {
-        this.header.textContent = meta.title;
-      }
     }
   }
 
@@ -378,39 +379,84 @@ export class AppManager {
   renderItemCard(item) {
     const sizes = Array.isArray(item.sizes) ? item.sizes : [];
     const prices = Array.isArray(item.prices) ? item.prices : [];
-    const priceLines = sizes
-      .map((size, index) => {
-        const price = prices[index];
-        const formattedPrice = typeof price === 'number'
-          ? DataUtils.formatPrice(price)
-          : '';
-        return `
-          <div class="price-line">
-            <span class="price-size">${size}</span>
-            <span class="price-value">${formattedPrice}</span>
-          </div>
-        `;
-      })
-      .join('');
-    const priceMarkup = priceLines || `
-      <div class="price-line">
-        <span class="price-value">Цена уточняется</span>
-      </div>
-    `;
+    const firstPricedIndex = sizes.findIndex((_, index) => typeof prices[index] === 'number');
+    const initialIndex = firstPricedIndex >= 0 ? firstPricedIndex : 0;
+    const initialPrice = typeof prices[initialIndex] === 'number'
+      ? DataUtils.formatPrice(prices[initialIndex])
+      : 'Цена уточняется';
+    const sizeButtons = sizes.length > 0
+      ? sizes
+        .map((size, index) => {
+          const price = prices[index];
+          const isActive = index === initialIndex;
+          const priceValue = typeof price === 'number' ? price : '';
+          return `
+            <button
+              type="button"
+              class="size-pill${isActive ? ' is-active' : ''}"
+              data-size-index="${index}"
+              data-price="${priceValue}"
+              aria-pressed="${isActive}"
+            >
+              ${size}
+            </button>
+          `;
+        })
+        .join('')
+      : '<span class="size-empty">Размеры уточняются</span>';
 
     return `
       <div class="item-card">
-        <img 
-          src="${DataUtils.getImageUrl(item.image)}" 
-          alt="${item.name}" 
-          loading="lazy"
-          onerror="this.style.display='none'"
-        >
-        <h4>${item.name}</h4>
-        <p>${item.description || ''}</p>
-        <div class="price-list">${priceMarkup}</div>
+        <div class="item-card__media">
+          <img 
+            src="${DataUtils.getImageUrl(item.image)}" 
+            alt="${item.name}" 
+            loading="lazy"
+            onerror="this.style.display='none'"
+          >
+        </div>
+        <div class="item-card__content">
+          <h4 class="item-card__title">${item.name}</h4>
+          <p class="item-card__desc">${item.description || ''}</p>
+        </div>
+        <div class="item-card__actions">
+          <div class="size-list">${sizeButtons}</div>
+          <div class="item-price">
+            <span class="item-price__label">Цена:</span>
+            <span class="item-price__value">${initialPrice}</span>
+          </div>
+        </div>
       </div>
     `;
+  }
+
+  handleSizeSelect(event) {
+    const button = event.target.closest('.size-pill');
+    if (!button || !this.content.contains(button)) {
+      return;
+    }
+
+    const card = button.closest('.item-card');
+    if (!card) {
+      return;
+    }
+
+    const buttons = card.querySelectorAll('.size-pill');
+    buttons.forEach(itemButton => {
+      const isActive = itemButton === button;
+      itemButton.classList.toggle('is-active', isActive);
+      itemButton.setAttribute('aria-pressed', isActive);
+    });
+
+    const priceEl = card.querySelector('.item-price__value');
+    if (!priceEl) {
+      return;
+    }
+
+    const rawPrice = button.dataset.price;
+    priceEl.textContent = rawPrice
+      ? DataUtils.formatPrice(Number(rawPrice))
+      : 'Цена уточняется';
   }
 
   groupItems(items) {
